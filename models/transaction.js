@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const itemtransaction = require('./itemtransaction');
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
     /**
@@ -11,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Transaction.belongsTo(models.User);
+      Transaction.belongsToMany(models.Product, {
+        through: models.ItemTransaction
+      })
     }
   }
   Transaction.init({
