@@ -1,5 +1,5 @@
 1. ERD - done
-2. Setup Migration - model association belum
+2. Setup Migration - model association belum + tambahan pathGambar
 3. Session - masih di app belum di controller, belum connect dengan database
 4. Setup app express - masih di app, belum dirouter
 5. Router - belum
@@ -7,6 +7,22 @@
 7. Menampilkan data ke ejs - belum
 8. Validasi - belum
 
+Page:
+0. Landing page "/"
+1. Login/Register -> Login dan register tidak ada role "/register" "/login"
+2. home "/home"
+//user
+3. Tampilan detail produk "/product/:id"
+4. Daftar produk yang ingin dibeli -> Cart "/cart/:id" -> session -> "/cart"
+5. Daftar transaksi yang sudah selesai -> "/history/:id -> session -> "/history"
+//Admin
+6. Tampilan daftar transaksi semua user
+7. Form buat user baru beserta rolenya
+8. Form buat baru produk
+9. Daftar semua produk
+
+//akhir
+10. navbar + nama pengguna (session)
 Alur program:
 
 1. Login & Register
