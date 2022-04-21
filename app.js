@@ -9,7 +9,7 @@ app.use(session({secret: "Shh, its a secret!"}));
 app.set('view engine','ejs' )
 app.get('/', function(req, res){
    console.log(req.query.username)
-   if(!req.query.username || !req.query.password ){
+   if(!req.query.username || !req.query.password || req.query.username==""||req.query.password==""){
       res.render('formLogin');
    }else{
       req.session.login = req.query.username;
