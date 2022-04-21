@@ -30,10 +30,12 @@ app.get('/', function(req, res){
    
 });
 app.get('/register',function(req,res){
+   res.render('formRegister');
+})
+app.post('/register',function(req,res){
 
    res.render('formRegister');
 })
-
 app.get('/homeAdmin',function(req,res){
 
    if(req.session.role=="Admin"){
