@@ -1,0 +1,32 @@
+[
+  {
+    "title":"Asus ROG01",
+    "price":10000000,
+    "stock":10,
+    "category":"Personal Computer"
+  },
+  {
+    "title":"Iphone 11 Pro Max",
+    "price":12000000,
+    "stock":10,
+    "category":"Smartphone"
+  },
+  {
+    "title":"Acer Swift01",
+    "price":8500000,
+    "stock":10,
+    "category":"Personal Computer"
+  },
+  {
+    "title":"Samsung Galaxy S9",
+    "price":7500000,
+    "stock":10,
+    "category":"Smartphone"
+  },
+  {
+    "title":"Msi Luxury01",
+    "price":13000000,
+    "stock":10,
+    "category":"Personal Computer"
+  }
+]
