@@ -10,7 +10,7 @@ router.get('/products/add', Controller.formProduct);
 
 router.post('/products/add', Controller.sendDataProduct);
 
-//router.get('/products/:id', Controller.formProduct);
+router.get('/products/:id', Controller.productDetail);
 
 router.get('/products/:id/edit', Controller.showEditProduct);
 

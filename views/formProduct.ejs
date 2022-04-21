@@ -1,7 +1,7 @@
 <html>
     <body>
         <button onclick="location.href='/products';">Product List</button>
-        <form action="/products/<% if(!result){console.log(result);%><%="add" %><% }else{%><%=result.id+"/edit"%>"<%} %> method="POST">
+        <form action="/products/<% if(!result){console.log(result);%><%="add"%><% }else{%><%=result.id+"/edit"%>"<%} %>" method="POST" enctype="multipart/form-data">
             <label>Title</label>
             <input type="text" name="title" value="<% if(result){%><%=result.title%><%}%>">
             <label>Price</label>
@@ -14,7 +14,11 @@
                 <option value="Smartphone" <% if(result){if(result.category=="Smartphone"){%><%="selected"%> <% }}%>>Smartphone</option>
             </select>
             
-            <label>Image URL (todo: pake multer mvp buat upload)</label>
+            <label>Image Upload </label>
+            <div>
+                <label>Upload picture</label>
+                <input type="file" name="upload_file" />
+            </div>
             <input type="submit">
             
             

@@ -21,7 +21,8 @@
                 <td><%= el.stock %></td>
                 <td><%= el.price  %></td>
                 <td><%= el.category  %></td>
-                <td><button onclick="location.href='/products/<%= el.id %>/edit'">Edit</button>
+                <td><button onclick="location.href='/products/<%= el.id %>'">Detail</button>
+                    <button onclick="location.href='/products/<%= el.id %>/edit'">Edit</button>
                     <button onclick="location.href='/products/<%= el.id %>/delete'">Delete</button>
                 </td>
             </tr>
