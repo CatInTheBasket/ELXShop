@@ -22,6 +22,8 @@ router.get('/users', Controller.usersAll);
 
 router.get('/users/add', Controller.formUserAdmin);
 
+router.post('/users/add', Controller.formUserAdmin);
+
 router.get('/users/:id', Controller.userDetail);
 
 router.get('/users/:id/edit', Controller.formProduct);

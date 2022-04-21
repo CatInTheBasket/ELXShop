@@ -1,11 +1,12 @@
-1. ERD - done
-2. Setup Migration - model association belum + tambahan pathGambar
-3. Session - masih di app belum di controller, belum connect dengan database
-4. Setup app express - masih di app, belum dirouter
-5. Router - belum
-6. Read data dari database - belum
-7. Menampilkan data ke ejs - belum
+1. ERD - DONE
+2. Setup Migration - model association on progress + tambahan pathGambar
+3. Session - belum - nanti di final
+4. Setup app express - DONE
+5. Router - setengah jalan
+6. Read data dari database - setengah jalan
+7. Menampilkan data ke ejs - setengah jalan
 8. Validasi - belum
+9. Merapihkan ejs - belum
 
 Page:
 0. Landing page "/"
@@ -16,10 +17,10 @@ Page:
 4. Daftar produk yang ingin dibeli -> Cart "/cart/:id" -> session -> "/cart"
 5. Daftar transaksi yang sudah selesai -> "/history/:id -> session -> "/history"
 //Admin
-6. Tampilan daftar transaksi semua user
-7. Form buat user baru beserta rolenya
-8. Form buat baru produk
-9. Daftar semua produk
+6. Tampilan daftar transaksi semua user - belum
+7. Form buat user baru beserta rolenya - belum,list dan detail sudah baru form
+8. Form buat baru produk - DONE
+9. Daftar semua produk - DONE
 
 //akhir
 10. navbar + nama pengguna (session)
@@ -37,8 +38,6 @@ Alur program:
 2. Admin
     Setelah login, halaman utama Admin adalah tabel transaksi, dengan beberapa opsi seperti
             -membuat user baru (dengan pilihan role)
-            -membuat produk baru
-            -melihat detail dari user
 
 3. User biasa
     Setelah login, halaman utama dari user adalah daftar produk, daftar produk bisa difilter berdasarkan kriteria tertentu
