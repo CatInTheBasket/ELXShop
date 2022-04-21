@@ -1,11 +1,9 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var router = require('./routes/router');
 var routeradmin = require('./routes/adminRoute');
 const fileUpload = require('express-fileupload');
-
-var router = require('./routes/router');
-
 var app = express();
 
 app.use(fileUpload());
@@ -15,8 +13,6 @@ app.use('/img', express.static(__dirname + '\\controller\\uploads'));
 app.use(cookieParser());
 
 app.use(express.urlencoded({extended:true}));
-
-//app.use('/', router);  
 
 app.use('/', routeradmin);
 
