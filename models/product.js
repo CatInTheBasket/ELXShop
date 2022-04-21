@@ -12,6 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+        
+    static getProductByCategory(category) {
+      let query = {
+        attributes: ['id', 'title', 'price', 'stock', 'category'],
+        order: [['stock', 'ASC'], ['stock', 'ASC']]
+      };
+      if (category != "") {
+        query.where = { category: category };
+      }
+
+      return Product.findAll(query);
+    }
   }
   Product.init({
     title: DataTypes.STRING,

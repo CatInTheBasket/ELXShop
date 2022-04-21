@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <h1>Product List</h1>
+        <button onclick="location.href='/products'">All</button><button
+            onclick="location.href='/products?cat=Smartphone'">Smartphone</button><button
+            onclick="location.href='/products?cat=Personal Computer'">Personal Computer</button>
+
+            <p><%= itemdata %></p>
+            <p><button onclick="location.href='/products/add'">Product List</button></p>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+            <% result.forEach(el => { %>
+            <tr>
+                <td><%= el.title %></td>
+                <td><%= el.stock %></td>
+                <td><%= el.price  %></td>
+                <td><%= el.category  %></td>
+                <td><button onclick="location.href='/products/<%= el.id %>/edit'">Edit</button>
+                    <button onclick="location.href='/products/<%= el.id %>/delete'">Delete</button>
+                </td>
+            </tr>
+            <% }); %>
+        </table>
+    </body>
+</html>
