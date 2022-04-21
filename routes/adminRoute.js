@@ -10,7 +10,7 @@ router.get('/products/add', Controller.formProduct);
 
 router.post('/products/add', Controller.sendDataProduct);
 
-router.get('/products/:id', Controller.formProduct);
+//router.get('/products/:id', Controller.formProduct);
 
 router.get('/products/:id/edit', Controller.showEditProduct);
 
@@ -18,11 +18,11 @@ router.post('/products/:id/edit', Controller.doEditProduct);
 
 router.get('/products/:id/delete', Controller.deleteProduct);
 
-router.get('/users', Controller.formUserAdmin);
+router.get('/users', Controller.usersAll);
 
-router.get('/users/add', Controller.formProduct);
+router.get('/users/add', Controller.formUserAdmin);
 
-router.get('/users/:id', Controller.formProduct);
+router.get('/users/:id', Controller.userDetail);
 
 router.get('/users/:id/edit', Controller.formProduct);
 

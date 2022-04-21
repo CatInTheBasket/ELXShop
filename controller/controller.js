@@ -39,6 +39,19 @@ class Controller {
         });
     }
 
+    static usersAll(req, res) {
+        let itemdata = "";
+        if (req.query.querySuccess) {
+            itemdata = req.query.querySuccess;
+        }
+        User.findAll().then(result => {
+            res.render('usersAdmin.ejs', { result,itemdata});
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        });
+    }
+
     static deleteProduct(req, res) {
         let id = req.params.id;
         let query = {
@@ -61,6 +74,16 @@ class Controller {
         let id = req.params.id;
         Product.findByPk(id).then(result => {
             res.render('productDetail.ejs', { result })
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        });
+    }
+
+    static userDetail(req, res) {
+        let id = req.params.id;
+        User.findByPk(id).then(result => {
+            res.render('userDetail.ejs', { result })
         }).catch(err => {
             console.log(err);
             res.send(err);
