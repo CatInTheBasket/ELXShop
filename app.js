@@ -14,20 +14,46 @@ app.get('/', function(req, res){
    }else{
       req.session.login = req.query.username;
       req.session.password = req.query.password;
-      res.redirect('/home');
+      let role= req.query.role;
+      if(!role){
+         role="User"
+      }else{
+         if(role=="Admin"){
+            req.session.role = role;
+            res.redirect('/homeAdmin');
+         }else{
+            req.session.role = "User";
+            res.redirect('/home');
+         }
+      }
    }
    
 });
-app.get('/home',function(req,res){
 
-   if(req.session.page_views){
-      req.session.page_views++;
-      let message="You visited this page " + req.session.page_views + " times with User: "+req.session.login;
-      res.render('home',{message});
+app.get('/homeAdmin',function(req,res){
+
+   if(req.session.role=="Admin"){
+      let message="Welcome " + req.session.role + " "+req.session.login;
+      res.render('homeAdmin',{message});
    } else {
-      req.session.page_views = 1;
-      res.send("Welcome to this page for the first time!");
+      res.redirect("/home");
    }
+})
+
+app.get('/home',function(req,res){
+   if(req.session.role=="Admin"){
+      res.redirect("/homeAdmin");
+   }else{
+      if(req.session.page_views){
+         req.session.page_views++;
+         let message="You visited this page " + req.session.page_views + " times with User: "+req.session.login;
+         res.render('home',{message});
+      } else {
+         req.session.page_views = 1;
+         res.send("Welcome to this page for the first time!");
+      }
+   }
+   
 })
 
 app.get('/logout',function(req,res){
