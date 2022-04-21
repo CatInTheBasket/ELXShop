@@ -40,20 +40,26 @@ class Controller {
     }
 
     static postRegister(req, res) {
+        let role="customer";
+        if(req.body.role){
+            role=req.body.role;
+        }
         let newUser = {
             username: req.body.username,
             password: req.body.password,
+            email: req.body.email,
             nickname: req.body.nickname,
+            role: role
         }
+        
 
         User.create(newUser)
-            .then(() => {
-                console.log(req.body);
+            .then((result) => {
                 let profile = {
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    email: req.body.email,
-                    dateofbirth: req.body.dateofbirth,
+                    firstName: req.body.firstname,
+                    lastName: req.body.lastname,
+                    dateOfBirth: req.body.dateofbirth,
+                    UserId: result.id
                 }
                 return Profile.create(profile)
             })
@@ -61,6 +67,7 @@ class Controller {
                 res.redirect("/login")
             })
             .catch((err) => {
+                console.log(err);
                 res.send(err);
             })
     }
