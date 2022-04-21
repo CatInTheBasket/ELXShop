@@ -35,7 +35,7 @@ class Controller {
                         let message="Welcome Admin "+result.nickname;
                         res.render("homeAdmin.ejs", { message })
                     }else{
-                        res.render("home.ejs", { result })
+                        res.render("home.ejs", { req })
                     }
                     
                 }
