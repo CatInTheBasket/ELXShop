@@ -1,0 +1,21 @@
+<html>
+        <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+                <% result.forEach(el => { %>
+                <tr>
+                    <td><%= el.nickname %></td>
+                    <td><%= el.role %></td>
+                    <td><%= el.email  %></td>
+                    <td><button onclick="location.href='/users/<%= el.id %>'">Detail</button>
+                        <button onclick="location.href='/users/<%= el.id %>/edit'">Edit</button>
+                        <button onclick="location.href='/users/<%= el.id %>/delete'">Delete</button>
+                    </td>
+                </tr>
+                <% }); %>
+            </table>
+</html>

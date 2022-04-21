@@ -1,0 +1,21 @@
+
+<html>
+    <body>
+            
+            <% if(result){ %>
+                <h1>Detail barang</h1>
+                    <p><%= "Nama : "+result.title %></p>
+                    <p><%= "Harga : "+result.price %></p>
+                    <p><%= "Sisa stok : "+result.stock %></p>
+                    <p><%= "Category : "+result.category %></p>
+                    <img src="<%= '/img/'+result.imageURL %>"></img>
+                    <form action="/products/<%= result.id %>/buy" method="POST">
+                        <label>Jumlah barang</label><br>
+                        <input type="number" name="totalstock"><br><br>
+                        <input type="submit" value="Beli">
+                    </form>
+                    
+            <% } %>
+        </table>
+    </body>
+</html>

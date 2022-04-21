@@ -6,7 +6,9 @@
             onclick="location.href='/products?cat=Personal Computer'">Personal Computer</button>
 
             <p><%= itemdata %></p>
+            <% if(role=="admin"){ %>
             <p><button onclick="location.href='/products/add'">Product List</button></p>
+            <% } %>
         <table>
             <tr>
                 <th>Title</th>
@@ -21,10 +23,16 @@
                 <td><%= el.stock %></td>
                 <td><%= el.price  %></td>
                 <td><%= el.category  %></td>
+                <% if(role=="admin"){ %>
                 <td><button onclick="location.href='/products/<%= el.id %>'">Detail</button>
                     <button onclick="location.href='/products/<%= el.id %>/edit'">Edit</button>
                     <button onclick="location.href='/products/<%= el.id %>/delete'">Delete</button>
                 </td>
+                <% }else{ %>
+                <td>
+                    <button onclick="location.href='/products/<%= el.id %>'">Beli</button>
+                </td>
+                <% } %>
             </tr>
             <% }); %>
         </table>

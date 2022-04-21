@@ -12,6 +12,34 @@ class Controller {
         res.render("formLogin.ejs");
     }
 
+    static home(req, res) {
+        if (req.session.role == "admin") {
+            let message = "Welcome Admin " + req.session.login;
+            Transaction.findAll().then(result => {
+                res.render("homeAdmin.ejs", { message,result });
+            }).catch(err => {
+                console.log(err);
+                res.send(err);
+            });            
+            
+        } else {
+            //let transactionList=[];
+            if(req.session.login){
+            Transaction.findAll({where: { UserId: req.session.iduser,status: false}}).then(result=>{
+                
+                res.render("home.ejs", { req,result })
+            }).catch(err=>{
+                res.send(err);
+            })
+        }else{
+            res.render("landingPage.ejs");
+        }
+
+                        
+            
+        }
+    }
+
     static postLogin(req, res) {
         let newUser = {
             username: req.body.username,
@@ -31,13 +59,10 @@ class Controller {
                     //console.log(req.session);
                     req.session.login = result.nickname;
                     req.session.role = result.role;
-                    if(req.session.role=="admin"){
-                        let message="Welcome Admin "+result.nickname;
-                        res.render("homeAdmin.ejs", { message })
-                    }else{
-                        res.render("home.ejs", { req })
-                    }
+                    req.session.iduser = result.id;
+                        res.redirect('home');
                     
+
                 }
             })
             .catch((err) => {
@@ -47,12 +72,12 @@ class Controller {
     }
 
     static register(req, res) {
-        if(req.session.role == "admin"){
+        if (req.session.role != "admin") {
             res.render("formRegister.ejs");
-        }else{
+        } else {
             res.render("formRegisterAdmin.ejs");
         }
-        
+
     }
 
     static postRegister(req, res) {
@@ -80,12 +105,12 @@ class Controller {
                 return Profile.create(profile)
             })
             .then(() => {
-                if(req.session.role=="admin"){
+                if (req.session.role == "admin") {
                     res.redirect("/users")
-                }else{
+                } else {
                     res.redirect("/login")
                 }
-                
+
             })
             .catch((err) => {
                 console.log(err);
@@ -139,7 +164,8 @@ class Controller {
             category = req.query.cat;
         }
         Product.getProductByCategory(category).then(result => {
-            res.render('product.ejs', { result, itemdata });
+            let role = req.session.role;
+            res.render('product.ejs', { result, itemdata,role });
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -153,6 +179,16 @@ class Controller {
         }
         User.findAll().then(result => {
             res.render('usersAdmin.ejs', { result, itemdata });
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        });
+    }
+
+    static transactionsAll(req, res) {
+        let itemdata = "";
+        Transaction.findAll().then(result => {
+            res.render('listTransaction.ejs', { result });
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -181,7 +217,9 @@ class Controller {
         let id = req.params.id;
         Product.findByPk(id).then(result => {
             //console.log(result);
-            res.render('productDetail.ejs', { result })
+            let role = req.session.role;
+            console.log(role);
+            res.render('productDetail.ejs', { result,role })
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -219,9 +257,71 @@ class Controller {
         })
     }
 
-    static logout(req,res){
+    static checkProduct(req, res) {
+        let id = req.params.id;
+        Product.findByPk(id).then(result => {
+            res.render('productDetailCheckout.ejs', { result })
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        });
+    }
+
+    static doCheckoutProduct(req, res) {
+        let id = req.params.id;
+        let {totalstock}=req.body;
+        let prices;
+        let userId=req.session.iduser;
+        let transactionId;
+        Product.findByPk(id).then(result => {
+            if(result.id){
+                //return Transaction.create({transactionDate: new Date(),totalPrice: 0, totalStock:})
+                prices=result.price*totalstock;
+                return Transaction.findOne({where: { UserId: userId,status: false}});
+            }
+            else{
+                res.send("No matching product");
+            }
+        }).then(result=>{
+            console.log(result);
+            if(result){
+                transactionId=result.id;
+                let temp =result.totalStock+totalstock
+                let tempPrice=result.totalPrice+prices;
+                return Transaction.update({ totalStock: temp, totalPrice: tempPrice}, { where: { id: result.id } })
+            }else{
+                return Transaction.create({transactionDate: new Date(),totalPrice: prices, totalStock: totalstock,status:false,UserId: userId});
+            }
+        }).then(result=>{
+            if(!transactionId){
+                transactionId=result.id;
+            }
+            return ItemTransaction.create({totalStock: totalstock,TransactionId:transactionId,ProductId:id});
+        }).then(()=>{
+            res.redirect('/home');
+        }).catch(err => {
+            console.log(err);
+            res.send(err);
+        });
+    }
+
+    static logout(req, res) {
         req.session.destroy();
         res.redirect('/');
+    }
+
+    static doneTransaction(req, res) {
+        let id = req.query.finish;
+        Transaction.update({ status:true}, { where: { id: id } })
+        res.redirect('/home');
+    }
+
+    static checkDoneTransaction(req, res) {
+        let id = req.params.id;
+        Transaction.findAll({where: { UserId: id,status: true}}).then(result=>{
+                
+            res.render("listTransactionDone.ejs", { req,result })
+        })
     }
 }
 

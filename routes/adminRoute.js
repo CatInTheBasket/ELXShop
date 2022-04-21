@@ -14,6 +14,10 @@ router.get('/products/:id', Controller.productDetail);
 
 router.get('/products/:id/edit', Controller.showEditProduct);
 
+router.get('/products/:id/buy', Controller.checkProduct);
+
+router.post('/products/:id/buy', Controller.doCheckoutProduct);
+
 router.post('/products/:id/edit', Controller.doEditProduct);
 
 router.get('/products/:id/delete', Controller.deleteProduct);
@@ -33,5 +37,7 @@ router.post('/users/:id/edit', Controller.formProduct);
 router.get('/users/:id/delete', Controller.formProduct);
 
 router.get('/transactions/:id/', Controller.formProduct);
+
+router.get('/transactions', Controller.doneTransaction);
 
 module.exports = router

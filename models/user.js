@@ -25,5 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+  User.addHook('beforeCreate', (user, options) => {
+    if(!user.role){
+      user.role="customer";
+    }else{
+      if(user.role!="customer"&&user.role!="admin"){
+        user.role="customer";
+      }
+    }
+  });
   return User;
 };

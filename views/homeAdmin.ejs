@@ -4,12 +4,15 @@
 <%= message %>
 <button onclick="location.href='/products';">List Produk</button>
 <button onclick="location.href='/users';">List User</button>
-<form>
-    <label>Nama Produk</label>
-    <label>Stok</label>
-    <label>Gambar</label>
-    <label>Harga</label>
-    <label>Category</label>
-</form>
-
+<div>
+<% result.forEach(element => { %>
+    <div>
+        <h1>Tanggal <%= element.transactionDate %></h1>
+        <p>Total Price: <%= element.totalPrice %></p>
+        <p>Total Barang: <%= element.totalStock %></p>
+        <p>Status: <%= element.status %></p>
+        <p>User: <%= element.UserId %></p>
+    </div>
+<% }); %>
+</div>
 </html>

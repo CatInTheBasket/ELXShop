@@ -8,7 +8,8 @@
                 <th>Category</th>
                 <th>Price</th>
                 <th>Stock</th>
-                <th>Image</th>                
+                <th>Image</th>
+                <th>Action</th>                
             </tr>
             
             <% if(result){ %>
@@ -19,6 +20,9 @@
                     <td><%= result.stock %></td>
                     <td><%= result.category %></td>
                     <td><img src="<%= '/img/'+result.imageURL %>"></img></td>
+                    <% if(role=="customer"){ %>
+                    <td><button onclick="location.href='/products/<%= result.id %>/buy'">Tambahkan ke Keranjang</button></td>
+                    <% } %>
                 </tr>
             <% } %>
         </table>
