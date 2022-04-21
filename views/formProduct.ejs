@@ -10,8 +10,8 @@
             <input type="number" name="stock" value="<% if(result){%><%=result.stock%><%}%>">
             <label>Category</label>
             <select name="category">
-                <option value="Personal Computer">Personal Computer</option>
-                <option value="Smartphone">Smartphone</option>
+                <option value="Personal Computer" <% if(result){if(result.category=="Personal Computer"){ %><%="selected"%> <% }}%>>Personal Computer</option>
+                <option value="Smartphone" <% if(result){if(result.category=="Smartphone"){%><%="selected"%> <% }}%>>Smartphone</option>
             </select>
             
             <label>Image URL (todo: pake multer mvp buat upload)</label>
