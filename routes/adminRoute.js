@@ -36,7 +36,7 @@ router.post('/users/:id/edit', Controller.formProduct);
 
 router.get('/users/:id/delete', Controller.formProduct);
 
-router.get('/transactions/:id/', Controller.formProduct);
+router.get('/transactions/:id', Controller.checkDoneTransaction);
 
 router.get('/transactions', Controller.doneTransaction);
 
