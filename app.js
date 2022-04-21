@@ -11,14 +11,14 @@ app.use(fileUpload());
 app.use('/img', express.static(__dirname + '\\controller\\uploads'));
 
 app.use(cookieParser());
-
+app.use(session({secret: "Shh, its a secret!"}));
 app.use(express.urlencoded({extended:true}));
 
 app.use('/', routeradmin);
 
 app.use('/', router);
 
-app.use(session({secret: "Shh, its a secret!"}));
+
 
 app.set('view engine','ejs' )
 

@@ -1,6 +1,7 @@
 
 const { ItemTransaction, Product, Profile, Transaction, User } = require("../models/index.js")
 const { Op } = require("sequelize")
+const session = require('express-session');
 class Controller {
 
     static landingPage(req, res) {
@@ -24,25 +25,40 @@ class Controller {
             }
         })
             .then(result => {
-                if(!result) {
+                if (!result) {
                     res.redirect("/");
                 } else {
-                    res.render("home.ejs", {result})
+                    //console.log(req.session);
+                    req.session.login = result.nickname;
+                    req.session.role = result.role;
+                    if(req.session.role=="admin"){
+                        let message="Welcome Admin "+result.nickname;
+                        res.render("homeAdmin.ejs", { message })
+                    }else{
+                        res.render("home.ejs", { result })
+                    }
+                    
                 }
             })
             .catch((err) => {
+                console.log(err);
                 res.send(err);
             })
     }
 
     static register(req, res) {
-        res.render("formRegister.ejs");
+        if(req.session.role == "admin"){
+            res.render("formRegister.ejs");
+        }else{
+            res.render("formRegisterAdmin.ejs");
+        }
+        
     }
 
     static postRegister(req, res) {
-        let role="customer";
-        if(req.body.role){
-            role=req.body.role;
+        let role = "customer";
+        if (req.body.role) {
+            role = req.body.role;
         }
         let newUser = {
             username: req.body.username,
@@ -51,7 +67,7 @@ class Controller {
             nickname: req.body.nickname,
             role: role
         }
-        
+
 
         User.create(newUser)
             .then((result) => {
@@ -64,7 +80,12 @@ class Controller {
                 return Profile.create(profile)
             })
             .then(() => {
-                res.redirect("/login")
+                if(req.session.role=="admin"){
+                    res.redirect("/users")
+                }else{
+                    res.redirect("/login")
+                }
+                
             })
             .catch((err) => {
                 console.log(err);
@@ -103,7 +124,7 @@ class Controller {
                     }).catch(err => {
                         console.log(err);
                         res.send(err);
-                    }); 
+                    });
                 }
             })
         }
@@ -196,6 +217,11 @@ class Controller {
             console.log(err);
             res.send(err);
         })
+    }
+
+    static logout(req,res){
+        req.session.destroy();
+        res.redirect('/');
     }
 }
 
