@@ -1,7 +1,7 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var router = require('./routes/adminRoute')
+var router = require('./routes/router');
 var app = express();
 
 app.use(cookieParser());
