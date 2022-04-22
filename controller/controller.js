@@ -28,7 +28,7 @@ class Controller {
             if(req.session.login){
             Transaction.findAll({where: { UserId: req.session.iduser,status: false}}).then(result=>{
                 
-                res.render("home.ejs", { req,result })
+                res.render("home.ejs", { req,result,dateFormat })
             }).catch(err=>{
                 res.send(err);
             })
@@ -329,7 +329,7 @@ class Controller {
         let id = req.params.id;
         Transaction.findAll({where: { UserId: id,status: true}}).then(result=>{
                 
-            res.render("listTransactionDone.ejs", { req,result })
+            res.render("listTransactionDone.ejs", { req,result,dateFormat })
         }).catch(err=>{
             console.log(err);
             res.send(err);

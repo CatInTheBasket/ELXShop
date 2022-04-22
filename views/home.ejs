@@ -14,7 +14,7 @@
 
   <% result.forEach(element => { %>
     <div>
-        <h1>Tanggal <%= element.transactionDate %></h1>
+        <h1>Tanggal <%= dateFormat(element.transactionDate) %></h1>
         <p>Total Price: <%= element.transactionDate %></p>
         <p>Total Barang: <%= element.totalStock %></p>
         <button onclick="location.href='/transactions?finish=<%= element.id %>';">Selesaikan Transaksi</button>

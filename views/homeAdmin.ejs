@@ -7,7 +7,7 @@
 <div>
 <% result.forEach(element => { %>
     <div>
-        <h1>Tanggal <%= element.transactionDate %></h1>
+        <h1>Tanggal <%= dateFormat(element.transactionDate) %></h1>
         <p>Total Price: <%= element.totalPrice %></p>
         <p>Total Barang: <%= element.totalStock %></p>
         <p>Status: <%= element.status %></p>
