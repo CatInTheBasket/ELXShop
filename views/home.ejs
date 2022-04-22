@@ -9,7 +9,7 @@
 <body>
   <button onclick="location.href='/logout'">Logout</button>
   <button onclick="location.href='/products';">List Produk</button>
-  <button onclick="location.href='/transactions/<%= req.session.iduser %>';">List Produk</button>
+  <button onclick="location.href='/transactions/<%= req.session.iduser %>';">Daftar Transaksi yang selesai</button>
   <h1>Welcome to ELX Shop, <%= req.session.login %> </h1>
 
   <% result.forEach(element => { %>
@@ -17,7 +17,7 @@
         <h1>Tanggal <%= element.transactionDate %></h1>
         <p>Total Price: <%= element.transactionDate %></p>
         <p>Total Barang: <%= element.totalStock %></p>
-        <button onclick="location.href='/transactions?finish=<%= element.id %>';">Daftar Transaksi yang selesai</button>
+        <button onclick="location.href='/transactions?finish=<%= element.id %>';">Selesaikan Transaksi</button>
     </div>
 <% }); %>
 </body>

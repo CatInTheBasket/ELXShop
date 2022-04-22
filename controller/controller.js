@@ -2,6 +2,7 @@
 const { ItemTransaction, Product, Profile, Transaction, User } = require("../models/index.js")
 const { Op } = require("sequelize")
 const session = require('express-session');
+const dateFormat = require('../helper/dateFormat')
 class Controller {
 
     static landingPage(req, res) {
@@ -16,7 +17,7 @@ class Controller {
         if (req.session.role == "admin") {
             let message = "Welcome Admin " + req.session.login;
             Transaction.findAll().then(result => {
-                res.render("homeAdmin.ejs", { message,result });
+                res.render("homeAdmin.ejs", { message,result,dateFormat });
             }).catch(err => {
                 console.log(err);
                 res.send(err);
@@ -151,6 +152,9 @@ class Controller {
                         res.send(err);
                     });
                 }
+            }).catch(err=>{
+                console.log(err);
+                res.send(err);
             })
         }
     }
@@ -188,7 +192,7 @@ class Controller {
     static transactionsAll(req, res) {
         let itemdata = "";
         Transaction.findAll().then(result => {
-            res.render('listTransaction.ejs', { result });
+            res.render('listTransaction.ejs', { result,dateFormat });
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -312,8 +316,13 @@ class Controller {
 
     static doneTransaction(req, res) {
         let id = req.query.finish;
-        Transaction.update({ status:true}, { where: { id: id } })
-        res.redirect('/home');
+        Transaction.update({ status:true}, { where: { id: id } }).then(()=>{
+            res.redirect('/home');
+        }).catch(err=>{
+            console.log(err);
+            res.send(err);
+        })
+        
     }
 
     static checkDoneTransaction(req, res) {
@@ -321,6 +330,9 @@ class Controller {
         Transaction.findAll({where: { UserId: id,status: true}}).then(result=>{
                 
             res.render("listTransactionDone.ejs", { req,result })
+        }).catch(err=>{
+            console.log(err);
+            res.send(err);
         })
     }
 }

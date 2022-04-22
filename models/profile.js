@@ -13,12 +13,49 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User);
     }
+
+    get getAge() {
+      return new Date().getFullYear() - this.dateOfBirth.getFullYear();
+    }
+    
   }
   Profile.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    dateOfBirth: DataTypes.DATE,
-    UserId: DataTypes.INTEGER
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          msg:"firstName must not empty"
+        },
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          msg:"lastName must not empty"
+        },
+      }
+    },
+    dateOfBirth: {
+      type: DataTypes.DATE,
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          msg:"dateOfBirth must not empty"
+        },
+      }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          msg:"UserId must not empty"
+        },
+      }
+    },
   }, {
     sequelize,
     modelName: 'Profile',
