@@ -17,27 +17,27 @@ class Controller {
         if (req.session.role == "admin") {
             let message = "Welcome Admin " + req.session.login;
             Transaction.findAll().then(result => {
-                res.render("homeAdmin.ejs", { message,result,dateFormat });
+                res.render("homeAdmin.ejs", { message, result, dateFormat });
             }).catch(err => {
                 console.log(err);
                 res.send(err);
-            });            
-            
+            });
+
         } else {
             //let transactionList=[];
-            if(req.session.login){
-            Transaction.findAll({where: { UserId: req.session.iduser,status: false}}).then(result=>{
-                
-                res.render("home.ejs", { req,result,dateFormat })
-            }).catch(err=>{
-                res.send(err);
-            })
-        }else{
-            res.render("landingPage.ejs");
-        }
+            if (req.session.login) {
+                Transaction.findAll({ where: { UserId: req.session.iduser, status: false } }).then(result => {
 
-                        
-            
+                    res.render("home.ejs", { req, result, dateFormat })
+                }).catch(err => {
+                    res.send(err);
+                })
+            } else {
+                res.render("landingPage.ejs");
+            }
+
+
+
         }
     }
 
@@ -61,8 +61,8 @@ class Controller {
                     req.session.login = result.nickname;
                     req.session.role = result.role;
                     req.session.iduser = result.id;
-                        res.redirect('home');
-                    
+                    res.redirect('home');
+
 
                 }
             })
@@ -152,9 +152,6 @@ class Controller {
                         res.send(err);
                     });
                 }
-            }).catch(err=>{
-                console.log(err);
-                res.send(err);
             })
         }
     }
@@ -169,7 +166,7 @@ class Controller {
         }
         Product.getProductByCategory(category).then(result => {
             let role = req.session.role;
-            res.render('product.ejs', { result, itemdata,role });
+            res.render('product.ejs', { result, itemdata, role });
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -192,7 +189,7 @@ class Controller {
     static transactionsAll(req, res) {
         let itemdata = "";
         Transaction.findAll().then(result => {
-            res.render('listTransaction.ejs', { result,dateFormat });
+            res.render('listTransaction.ejs', { result, dateFormat });
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -223,7 +220,7 @@ class Controller {
             //console.log(result);
             let role = req.session.role;
             console.log(role);
-            res.render('productDetail.ejs', { result,role })
+            res.render('productDetail.ejs', { result, role })
         }).catch(err => {
             console.log(err);
             res.send(err);
@@ -273,35 +270,35 @@ class Controller {
 
     static doCheckoutProduct(req, res) {
         let id = req.params.id;
-        let {totalstock}=req.body;
+        let { totalstock } = req.body;
         let prices;
-        let userId=req.session.iduser;
+        let userId = req.session.iduser;
         let transactionId;
         Product.findByPk(id).then(result => {
-            if(result.id){
+            if (result.id) {
                 //return Transaction.create({transactionDate: new Date(),totalPrice: 0, totalStock:})
-                prices=result.price*totalstock;
-                return Transaction.findOne({where: { UserId: userId,status: false}});
+                prices = result.price * totalstock;
+                return Transaction.findOne({ where: { UserId: userId, status: false } });
             }
-            else{
+            else {
                 res.send("No matching product");
             }
-        }).then(result=>{
+        }).then(result => {
             console.log(result);
-            if(result){
-                transactionId=result.id;
-                let temp =result.totalStock+totalstock
-                let tempPrice=result.totalPrice+prices;
-                return Transaction.update({ totalStock: temp, totalPrice: tempPrice}, { where: { id: result.id } })
-            }else{
-                return Transaction.create({transactionDate: new Date(),totalPrice: prices, totalStock: totalstock,status:false,UserId: userId});
+            if (result) {
+                transactionId = result.id;
+                let temp = result.totalStock + totalstock
+                let tempPrice = result.totalPrice + prices;
+                return Transaction.update({ totalStock: temp, totalPrice: tempPrice }, { where: { id: result.id } })
+            } else {
+                return Transaction.create({ transactionDate: new Date(), totalPrice: prices, totalStock: totalstock, status: false, UserId: userId });
             }
-        }).then(result=>{
-            if(!transactionId){
-                transactionId=result.id;
+        }).then(result => {
+            if (!transactionId) {
+                transactionId = result.id;
             }
-            return ItemTransaction.create({totalStock: totalstock,TransactionId:transactionId,ProductId:id});
-        }).then(()=>{
+            return ItemTransaction.create({ totalStock: totalstock, TransactionId: transactionId, ProductId: id });
+        }).then(() => {
             res.redirect('/home');
         }).catch(err => {
             console.log(err);
@@ -316,21 +313,21 @@ class Controller {
 
     static doneTransaction(req, res) {
         let id = req.query.finish;
-        Transaction.update({ status:true}, { where: { id: id } }).then(()=>{
+        Transaction.update({ status: true }, { where: { id: id } }).then(() => {
             res.redirect('/home');
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err);
             res.send(err);
         })
-        
+
     }
 
     static checkDoneTransaction(req, res) {
         let id = req.params.id;
-        Transaction.findAll({where: { UserId: id,status: true}}).then(result=>{
-                
-            res.render("listTransactionDone.ejs", { req,result,dateFormat })
-        }).catch(err=>{
+        Transaction.findAll({ where: { UserId: id, status: true } }).then(result => {
+
+            res.render("listTransactionDone.ejs", { req, result, dateFormat })
+        }).catch(err => {
             console.log(err);
             res.send(err);
         })
